@@ -1,0 +1,59 @@
+<style>	
+	body{
+		background-color: #FFF;
+	}	
+	
+	.divImgSacada {
+	    text-align: center;
+	    height: 100px; 
+	    background-size: cover;
+	    border-radius: 10px;
+	}
+	
+	.divImgSacada i{
+		font-size: 50px;
+	    margin-top: 25px;
+	    opacity: 1;
+	}
+	
+	.divImgSacadaBtn{
+		background: rgba(0,0,0,0.6);
+	    border-radius: 35px;
+	    margin-top: 19px !important;
+	    font-size: 40px !important;
+	    padding: 7px;	  		
+	}
+	
+	.divTextoError{
+    	font-size: 11px;
+	    bottom: 0px;
+	    right: 15px;
+	    background-color: #D9534F;
+	    border-radius: 4px;
+	    padding: 3px;
+	    position: absolute;
+	    color: white;
+	}
+</style>
+
+<div class="row" style="background-color: #EAE9E9; border-bottom: 1px solid #B1ADAE; ">
+	<div class="col-xs-12">
+		<div style="float: left; margin: 0px 15px;">
+			<div class="btn btn-info btn-circle-xs" style="cursor: default;">Fotos sacadas</div>		
+		</div>		
+		<div style="float: right; margin: 0px 15px;">
+			<a ng-href="#/" class="btn btn-danger btn-circle-xs"><i class="fa fa-arrow-left"></i> Volver</a>		
+		</div>		
+	</div>
+</div>
+<div class="col-xs-12" style="margin-top: 15px; margin-bottom: 40px;">
+	<div class="col-xs-6" ng-repeat="foto in misFotos" style="margin-top: 15px;">
+		<div class="divImgSacada" style="background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('{{ foto.ruta }}');">
+			<i ng-if="foto.estado == 0" class="fa fa-check-circle" style="color: #7cd448"></i>
+			<div ng-click="reSubir(foto)" ng-if="foto.estado == 1">
+				<i class="fa fa-refresh divImgSacadaBtn" style="color: #19a9d5"></i>
+				<div class="divTextoError" style="cursor: default;">error al subir</div>
+			</div>
+		</div>
+	</div>		
+</div>

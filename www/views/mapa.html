@@ -1,0 +1,24 @@
+<style>
+	.row div{
+		padding: 0px;
+	}
+</style>
+
+<div class="col-xs-12" style="background-color: #F7F7F7; margin: 5px 0px; border: 2px solid #777171;">
+	<div class="row" style="background-color: #EAE9E9; border-bottom: 1px solid #B1ADAE; ">
+		<div class="col-xs-12">
+			<button style="margin: 10px; float: right" class="btn btn-danger btn-circle-xs" ng-click="cerrarModal()"><i class="fa fa-times" style="font-size: 14px; margin-top: 0px;"></i></button>
+			<button style="margin: 10px; float: left" class="btn btn-info btn-circle-xs" ng-click="navegarADestino()"><i class="fa fa-car" style="font-size: 14px; margin-top: 0px;"></i> Navegar</button>
+		</div>
+	</div>
+	<div class="row">
+		<div id="mapa" style="height: 350px;">
+			<div class="map_container">
+				<ui-gmap-google-map ng-if="$parent.render" center="map.center" zoom="map.zoom" draggable="false" options="map.options" control="disabled">
+					<ui-gmap-marker coords="punto.coords" options="punto.options" idkey="punto.id">
+					</ui-gmap-marker>
+				</ui-gmap-google-map>						
+			</div>  
+		</div>	
+	</div>	
+</div>	

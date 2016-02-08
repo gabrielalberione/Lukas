@@ -1,0 +1,142 @@
+#logo {
+	margin-top: -100px;
+	top: 40%;
+	width: 100%;
+	text-align: center;
+   	position: absolute;
+    -webkit-animation: floatBubble 3s ease-in-out;
+    animation: floatBubble 3s ease-in-out;
+}
+
+#logo img{
+    -webkit-animation: zoom-out 2s ease-in-out;
+    animation: zoom-out 2s ease-in-out;
+}
+
+@-webkit-keyframes floatBubble {
+    0% {
+        margin-top: 0px;
+        position: absolute;
+        top: 40%;
+    }
+    100% {
+        margin-top: -100px;
+    }
+}
+@keyframes floatBubble {
+    0% {
+        margin-top: 0px;
+        position: absolute;
+        top: 40%;
+    }
+    70% {
+        margin-top: 0px;
+        position: absolute;
+        top: 40%;
+    }
+    100% {
+        margin-top: -100px;
+    }
+}
+@-webkit-keyframes show {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    90% {
+        display: none;
+        opacity: 0;
+    }
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}
+@keyframes show {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+    90% {
+        display: none;
+        opacity: 0;
+    }
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}	
+
+@-webkit-keyframes zoom-out {
+    0% {
+		-webkit-transform: scale(5);
+    }
+    40% {
+		-webkit-transform: scale(0.7);
+	}
+    60% {
+		-webkit-transform: scale(1);
+	}	
+}
+
+@keyframes zoom-out {
+    0% {
+		transform: scale(5);	
+    }
+    40% {
+		transform: scale(0.7);	
+	}
+    60% {
+		transform: scale(1);	
+	}	
+}	
+
+#form_login{
+	position: absolute;
+	text-align: center;
+    -webkit-animation: show 3s ease-in-out;
+    animation: show 3s ease-in-out;		
+	top:50%;
+	width: 100%;
+}
+
+#form_login input{
+	background-color: transparent;
+    border: 0px;
+    border-bottom: 1px solid;
+    padding: 5px;
+    color: #ebecf0;
+    width: 70%;
+	font-size: 25px;
+}
+
+#contacto button{
+	border: 0px;
+	width: 70%;
+	padding: 20px;
+	margin-top: 20px;
+	background-color: #D2CFCF;
+}
+
+#form_login button{
+	background-color: #A72424;
+	border: 0px;
+	width: 70%;
+	padding: 20px;
+	margin-top: 20px;
+	color: #ebecf0;
+}	
+
+#contacto{
+	position: absolute;
+	text-align: center;
+    -webkit-animation: show 4s ease-in-out;
+    animation: show 4s ease-in-out;			
+	bottom:10%;
+	width: 100%;		
+}
+
+#contacto a{
+	color: #ebecf0;		
+}

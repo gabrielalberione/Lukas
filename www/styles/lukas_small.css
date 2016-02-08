@@ -1,0 +1,10 @@
+@media (max-width: 481px){
+	.btn-circle p{
+		font-size: 11px !important;
+		margin-top: 10px;
+	}
+	
+	.btn-circle i{
+		font-size: 35px;
+	}
+}

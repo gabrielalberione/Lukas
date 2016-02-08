@@ -1,0 +1,62 @@
+<style>	
+	body{
+		background-color: #FFF;
+		overflow-y:hidden;
+	}	
+	#testDiv {
+	    height: 100%;
+	    overflow: auto;
+	    position:fixed; 
+	}	
+	.loading-spinner{
+	    height: 30px;
+	    width: 30px;
+		border: 8px solid #611919;
+	    border-right-color: transparent;
+	    border-radius: 50%;
+	    margin-top: 10px;
+	}
+</style>
+
+<div class="row" style="background-color: #EAE9E9; border-bottom: 1px solid #B1ADAE; ">
+	<div class="col-xs-12">
+		<div style="float: left; margin: 0px 15px;">
+			<div class="btn btn-info btn-circle-xs" style="cursor: default;">Linea de Tiempo</div>		
+		</div>		
+		<div style="float: right; margin: 0px 15px;">
+			<a ng-href="#/" class="btn btn-danger btn-circle-xs"><i class="fa fa-arrow-left"></i> Volver</a>		
+		</div>		
+	</div>
+</div>	
+<div class="col-xs-12" on-scroll="listarMasFotos()" id="testDiv">
+	<div ng-repeat="multimedia in multimedias">
+		<div class="col-xs-12" style="background-color: #F7F7F7; margin: 5px 0px; padding: 5px 0px;">
+			<div style="margin-top: 5px; margin-bottom: 10px; padding: 0px 15px;">
+				<img src="http://graph.facebook.com/{{ multimedia.Usuario.facebook_id }}/picture?type=normal" style="height: 50px; border-radius: 50px; margin-right: 10px;" >
+				<span>{{ multimedia.Usuario.apellido }}, {{ multimedia.Usuario.nombres }}</span>
+			</div>
+			<img ng-click="open(multimedia.Multimedia.id)" style="width: 100%; margin-bottom: 10px;" src="{{ urlFile }}/multimedias/eventos/{{ evento.id }}/md_{{ multimedia.Multimedia.codigo }}">
+			<div style="padding: 0px 15px;">
+				<span class="timeline_viral" style="margin-right: 10px;" ng-if="multimedia.Multimedia.c_likes > 0">{{multimedias[$index].Multimedia.c_likes}} Me gusta</span>
+				<span ng-click="open(multimedia.Multimedia.id)" class="timeline_viral" ng-if="multimedia.Multimedia.c_comentarios > 0">{{multimedia.Multimedia.c_comentarios}} Comentarios</span>
+			</div>
+			<div style="border-top: 1px solid #e5e5e5; margin-top: 12px; padding: 4px 15px;">
+				<div class="col-xs-6" style="padding: 5px;">
+					<button ng-click="darLike(multimedia.Multimedia.id,$index)" class="btn btn-transparente timeline_viral"><i ng-show="multimedia.Multimedia.usuario_like == 0" class="fa fa-thumbs-o-up"></i><i ng-show="multimedia.Multimedia.usuario_like == 1" class="fa fa-thumbs-up"></i> Me gusta</button>					
+				</div>
+				<div class="col-xs-6" style="padding: 5px; text-align: right;">
+					<button ng-click="open(multimedia.Multimedia.id)" class="btn btn-transparente timeline_viral"><i class="fa fa-comment"></i> Comentar</button>
+				</div>
+				<!--<div class="col-xs-4" style="padding: 5px;">
+					<button class="btn btn-transparente timeline_viral"><i class="fa fa-share"></i> Compartir</button>
+				</div>-->
+			</div>
+		</div>
+	</div>
+	<div ng-if="banCargando" class="row" style="height: 50px; text-align: center;">
+		<div class="loading-spinner"></div>	
+	</div>		
+	<div class="row" style="height: 120px;">
+		
+	</div>	
+</div>

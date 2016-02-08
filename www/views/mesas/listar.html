@@ -1,0 +1,45 @@
+<style>
+	p{
+		margin-top: 10px;
+	}
+	body{
+		background-color: #FFF;
+	}	
+	.ui-list-view-cell{
+		border-bottom: 1px solid #e5e5e5;
+	}
+	.ui-list-view-bordered p i{
+		margin-right: 10px;
+	}
+</style>
+
+<div class="panel panel-default">
+	<div class="row" style="background-color: #EAE9E9; border-bottom: 1px solid #B1ADAE; ">
+		<div class="col-xs-12">
+			<div style="float: left; margin: 0px 15px;">
+				<div class="btn btn-info btn-circle-xs" style="cursor: default;">Listado de Mesas</div>		
+			</div>		
+			<div style="float: right; margin: 0px 15px;">
+				<a ng-href="#/" class="btn btn-danger btn-circle-xs"><i class="fa fa-arrow-left"></i> Volver</a>		
+			</div>		
+		</div>
+	</div>	
+	<div class="panel-heading row">
+		<div class="col-xs-12">
+			<div class="col-xs-8">
+				<input class="form-control" ng-model="filtro.invitado" placeholder="Nombre/Apellido..." ng-change="filtrarInvitado()" />
+			</div>
+			<div class="col-xs-4">
+				<input class="form-control" ng-model="filtro.mesa" placeholder="Mesa Nro..." ng-change="filtrarMesas()" />
+			</div>
+		</div>
+	</div>
+	
+	<div class="panel-body">
+		<div class="ui-list-view-bordered" ui-list-view="mesa in mesas">
+			<p style="font-size: 15px"><strong>{{ mesa.Mesa.nombre }}</strong></p>
+			<p class="text-muted"><i class="fa fa-caret-right"></i>Mesa Nro: {{ mesa.Mesa.mesanro }}</p>
+		</div>
+	</div>
+    
+</div>

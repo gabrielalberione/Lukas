@@ -1,0 +1,43 @@
+<div class="col-xs-12" style="background-color: #F7F7F7; margin: 5px 0px; padding: 5px 0px;">
+	<button style="margin: 5px 15px; float: right" class="btn btn-danger btn-circle-xs" ng-click="cerrarModal()"><i class="fa fa-times" style="font-size: 14px; margin-top: 0px;"></i></button>
+	<div style="margin: 15px; margin-left: 0px;  padding: 0px 15px;">
+		<img src="http://graph.facebook.com/{{ multimediaActiva.Usuario.facebook_id }}/picture?type=normal" style="height: 50px; border-radius: 50px; margin-right: 10px;" >
+		<span>{{ multimediaActiva.Usuario.apellido }}, {{ multimediaActiva.Usuario.nombres }}</span>
+	</div>
+
+	<img ng-pinch-zoom style="width: 100%; margin-bottom: 10px;" src="{{ urlFile }}/multimedias/eventos/{{ evento.id }}/{{ multimediaActiva.Multimedia.codigo }}">
+	<div style="padding: 0px 15px;">
+		<span class="timeline_viral" style="margin-right: 10px;" ng-if="multimediaActiva.Multimedia.c_likes > 0">{{multimediaActiva.Multimedia.c_likes}} Me gusta</span>
+		<span class="timeline_viral" ng-if="multimediaActiva.Multimedia.c_comentarios > 0">{{multimediaActiva.Multimedia.c_comentarios}} Comentarios</span>
+	</div>
+	
+	<div style="border-top: 1px solid #e5e5e5; margin-top: 12px;"></div>
+
+	<div class="col-xs-12" ng-repeat="entity in multimediaActivaComentarios">
+		<div class="col-xs-3" style="padding: 10px 0px;">
+			<img src="http://graph.facebook.com/{{ entity.Usuario.facebook_id }}/picture?type=normal" style="max-width: 40px; margin: 5px 10px;" >
+		</div>
+		<div class="col-xs-9" style="margin-top: 8px; padding: 5px;">
+			<span class="timeline_comentarios_usuario"><b>{{ entity.Usuario.apellido }}, {{ entity.Usuario.nombres }} </b></span><span class="timeline_viral">{{entity.Comentario.comentario}}</span>
+			<br><span class="timeline_comentarios_hora">{{entity.Comentario.creado | asDate | date:'dd/MM/yyyy - HH:mm'}}</span>
+		</div>
+	</div>
+	<div ng-if="usuarioLogueado == true">
+		<div class="col-xs-12" style="margin-top: 8px;">
+			<div class="col-xs-3">
+				<img src="http://graph.facebook.com/{{ usuario.facebook_id }}/picture?type=normal" style="max-width: 40px; margin: 5px 10px;" >
+			</div>
+			<div class="col-xs-7" style="margin-top: 8px;">
+				<input class="timeline_input_comentario" type="text" ng-model="comentario_nuevo" placeholder="ingrese su comentario...">
+			</div>		
+			<div class="col-xs-2">
+				<button ng-click="enviarComentario(comentario_nuevo)" class="btn btn-success btn-circle-xs" ng-disabled="comentario_nuevo == '' || comentario_nuevo == null" style="height: 42px; margin-top: 5px;"><i class="fa fa-comment"></i></button>
+			</div>			
+		</div>	
+	</div>
+	<div ng-if="usuarioLogueado == false">
+		<div class="col-xs-12" style="margin-top: 8px;">
+			<div class="alert alert-info" role="alert"> "Debe iniciar sesión como usuario para dar likes y comentar!" <div style="float:right"></div></div>
+		</div>	
+	</div>	
+</div>

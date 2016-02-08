@@ -1,0 +1,74 @@
+<style>	
+	body{
+		background-color: #EAE9E9;
+	}	
+	.letra_negra{
+		color: #2F2F2F !important;
+	}
+</style>
+<div class="col-xs-12" style="margin-bottom: 70px;">
+	<div class="row">
+		<div class="col-xs-12 less_padding" ng-if="banCarruselLoading">
+			<a class="btn btn-warning btn-circle" style="background-color: black; border-color: black;">
+				<div class="loading-spinner" style="margin-top: 20px;"></div>	
+			</a>
+		</div>		
+		<div class="col-xs-12 less_padding"  ng-if="banCarruselLoading == false">
+			<ul rn-carousel-controls-allow-loop rn-carousel rn-carousel-auto-slide class="image btn-circle btn-negro" style="margin: 0px;  margin-top: 5px; height: 220px;">
+				<li ng-repeat="multimedia in multimedias">
+					<div class="layer" style="padding: 0px; height: 100%"><img style="height: 100%; width: auto;" src="{{ urlFile }}/multimedias/eventos/{{ evento.id }}/{{ multimedia.Multimedia.codigo }}"></div>
+				</li>
+			</ul>
+		</div>	
+		<div class="col-xs-12 less_padding">
+			<div class="btn btn-info btn-circle" style="cursor: default; height: 50px;">
+				<div style="margin-top: -27px;">
+					<i class="fa fa-birthday-cake" style="font-size: 20px; margin: 9px 9px;"></i>
+					<span class="modulos_texto"><b> Bienvenido a "{{evento.nombre}}" !!! </b></span>
+				</div>
+			</div>		
+		</div>	
+		
+		<div class="col-xs-6 less_padding">
+			<a ng-href="#/timelines" class="btn btn-success btn-circle"><i class="fa fa-picture-o"></i><p>Timeline</p></a>		
+		</div>				
+		<div class="col-xs-6 less_padding">
+			<a ng-click="loginFace()" class="btn btn-primary btn-circle" ng-if="usuarioLogueado == false">
+				<i class="fa fa-facebook-official" style="margin-top: 20px;"></i>
+				<p style="font-size: 14px;">Bienvenido!<br>Nos gustaría conocerte...</p>
+			</a>	
+			<a ng-click="loginFace()" class="btn btn-primary btn-circle" ng-if="usuarioLogueado == true">
+				<img src="http://graph.facebook.com/{{ usuario.facebook_id }}/picture?type=normal" style="height: 60px; border-radius: 50px; margin: 10px;" >
+				<p class="modulos_texto"><b>Bienvenido {{usuario.nombres}}!</b></p>
+			</a>				
+		</div>	
+		<div class="col-xs-12 less_padding">
+			<a ng-click="sacarFoto()" class="btn btn-lila btn-circle"><i class="fa fa-camera"></i><p>Saca Foto</p></a>		
+		</div>
+		<div class="col-xs-6 less_padding">
+			<a ng-href="#/mesas" class="btn btn-naranja btn-circle"><i class="fa fa-book"></i><p>Mi Mesa</p></a>		
+		</div>
+		<div class="col-xs-6 less_padding" ng-if="banMarkesLoading">
+			<a class="btn btn-warning btn-circle">
+				<i class="fa fa-map-marker" style="margin-top: 10px;"></i> <br>
+				<div class="loading-spinner"></div>	
+			</a>
+		</div>				
+		<div ng-repeat="marker in markers">		
+			<div class="col-xs-6 less_padding">
+				<a ng-click="abrirMapa(marker.Marker.latitud, marker.Marker.longitud, marker.Marker.nombre, marker.Marker.id)" class="btn btn-warning btn-circle">
+					<i class="fa fa-map-marker" style="margin-top: 10px;"></i><p class="modulos_texto"><b>{{marker.Marker.nombre}}</b><br> <u>Fecha:</u> {{marker.Marker.fecha | asDate | date:'dd/MM/yyyy'}}<br> <u>Hora:</u> {{marker.Marker.fecha | asDate | date:'HH:mm' }}</p>
+				</a>		
+			</div>				
+		</div>
+		
+		<div class="col-xs-6 less_padding">
+			<a ng-href="#/mesas" class="btn btn-verde btn-circle"><i class="fa fa-money"></i><p>Contratar lukas!</p></a>		
+		</div>	
+		<div class="col-xs-12 less_padding">
+			<a ng-click="logoutEvento()" class="btn btn-danger btn-circle"><i class="fa fa-sign-out"></i><p>Salir del Evento</p></a>		
+		</div>		
+	</div>
+</div>
+
+
