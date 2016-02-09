@@ -52,10 +52,10 @@ app.controller('backgroundController',  [
 					resolve(true);		
 				}else{
 					$rootScope.banConexion = false;
-					if(parent.pageActual == 'login'){
+					/*if(parent.pageActual == 'login'){
 						parent.pageActual = 'offline';
 						$location.path("/offline");
-					}	
+					}	*/
 					
 					resolve(false);		
 				}
