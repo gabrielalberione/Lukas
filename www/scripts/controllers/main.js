@@ -282,7 +282,7 @@ app.controller('MainController',  [
 			};	
 			
 			function uploadSuccess(r){
-				console.log("Response = " + r.response);
+				//console.log("Response = " + r.response);
 				$scope.cerrarModal();				
 				/*toaster.pop({
 					type: r.response.mensaje.tipo,
