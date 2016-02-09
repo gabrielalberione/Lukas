@@ -90,7 +90,7 @@ app.controller('MainController',  [
 													} else{
 														setTimeout(function (){
 															location.reload(true);
-														 }, 5000);
+														 }, 200);
 													}
 												} else{
 													alert("Error!");
