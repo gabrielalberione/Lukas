@@ -58,4 +58,10 @@
 	<allow-navigation href="http://*/*" />
 	<allow-navigation href="https://*/*" />
 	<allow-navigation href="data:*" />	
+	
+	<!-- Enable requests to content: URLs -->
+	<access origin="content:///*" />
+
+	<!-- Don't block any requests -->
+	<access origin="*" />	
 </widget>
