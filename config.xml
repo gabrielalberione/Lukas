@@ -23,12 +23,7 @@
     <platform name="ios">
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
-    </platform>
-    <platform name="ios">
-        <allow-intent href="itms:*" />
-        <allow-intent href="itms-apps:*" />
-    </platform>
-	
+    </platform>	
 	<preference name="iosPersistentFileLocation" value="Library" />	
 	<preference name="iosPersistentFileLocation" value="Compatibility" />	
 	<preference name="iosExtraFilesystems" value="library,library-nosync,documents,documents-nosync,cache,bundle,root" />

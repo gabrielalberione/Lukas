@@ -13,6 +13,7 @@ app.factory('databaseFactory', [
 				   $rootScope.banDB = true;
 				}catch(e){
 				   console.log('La aplicacion no soporta html5 database.');
+				   navigator.app.exitApp();
 				}
 			},
 			crearTablas: function(){
