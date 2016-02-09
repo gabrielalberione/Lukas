@@ -283,6 +283,7 @@ app.controller('MainController',  [
 			
 			function uploadSuccess(r){
 				//console.log("Response = " + r.response);
+				alert("ok!");
 				$scope.cerrarModal();				
 				/*toaster.pop({
 					type: r.response.mensaje.tipo,
@@ -294,6 +295,7 @@ app.controller('MainController',  [
 			}
 			
 			function uploadFail(){
+				alert("false!");
 				$scope.cerrarModal();
 				$scope.ultimaFoto.estado = 1;
 				databaseFactory.guardarFoto($scope.ultimaFoto);	
