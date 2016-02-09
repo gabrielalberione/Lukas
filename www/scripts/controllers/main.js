@@ -259,7 +259,7 @@ app.controller('MainController',  [
 				options.fileKey="file";
 				options.fileName=$scope.tempimagefilepath.substr($scope.tempimagefilepath.lastIndexOf('/')+1);
 				options.mimeType="image/jpeg";
-				options.chunkedMode = true;
+				options.chunkedMode = false;
 				
 				var params = {};
 				params.token = autenticacionFactory.getToken();
