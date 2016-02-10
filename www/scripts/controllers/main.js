@@ -278,7 +278,7 @@ app.controller('MainController',  [
 				$scope.ultimaFoto.estado = 0;
 								
 				var ft = new FileTransfer();
-				ft.upload($scope.tempimagefilepath, encodeURI("http://190.12.101.74/ais/lukas/api/subirarchivo/upload_imagen"), uploadSuccess, uploadFail, options);						
+				ft.upload($scope.tempimagefilepath, encodeURI(CONFIG.APIURL + "/subirarchivo/upload_imagen"), uploadSuccess, uploadFail, options);						
 			};	
 			
 			function uploadSuccess(r){
