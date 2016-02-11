@@ -89,7 +89,7 @@ app.controller('MultimediasController',  [
 			options.fileKey="file";
 			options.fileName=$scope.tempimagefilepath.substr($scope.tempimagefilepath.lastIndexOf('/')+1);
 			options.mimeType="image/jpeg";
-			options.chunkedMode = false;
+			options.chunkedMode = true;
 			
 			var params = {};
 			params.token = autenticacionFactory.getToken();
