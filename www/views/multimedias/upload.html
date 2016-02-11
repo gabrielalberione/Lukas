@@ -1,105 +1,31 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8"/>
-    <meta name="format-detection" content="telephone=no"/>
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width"/>
-    
-    <title>Lukas</title>
-    
-</head>
-<body onload="onDeviceReady()">
-	<div class="row" style="background-color: #EAE9E9; border-bottom: 1px solid #B1ADAE; ">
-		<div class="col-xs-12">
-			<div style="float: left; margin: 0px 15px;">
-				<div class="btn btn-info btn-circle-xs" style="cursor: default;">Fotos sacadas</div>		
-			</div>		
-			<div style="float: right; margin: 0px 15px;">
-				<a ng-href="#/" class="btn btn-danger btn-circle-xs"><i class="fa fa-arrow-left"></i> Volver</a>		
-			</div>		
+<div class="row" style="background-color: #EAE9E9; border-bottom: 1px solid #B1ADAE; ">
+	<div class="col-xs-12">
+		<div style="float: left; margin: 0px 15px;">
+			<div class="btn btn-info btn-circle-xs" style="cursor: default;">Fotos sacadas</div>		
+		</div>		
+		<div style="float: right; margin: 0px 15px;">
+			<a ng-href="#/" class="btn btn-danger btn-circle-xs"><i class="fa fa-arrow-left"></i> Volver</a>		
+		</div>		
+	</div>
+</div>
+<div class="col-xs-12" style="background-color: #F7F7F7; margin-bottom: 60px;">
+	<div class="row">
+		<div class="col-xs-12" style="text-align: center;">
+			<img id="imgUpload" ng-pinch-zoom style="width: 100%; margin-bottom: 10px;" id="uploadImg" ng-src="{{tempimagefilepath}}" >
+		<!--  		<img src="http://media3.popsugar-assets.com/files/2014/01/13/638/n/1922398/3cb9c131aea5e4ed_462328969_10.jpg.xxxlarge_2x/i/Chris-Hemsworth-game-fan-selfie-NBC-Globes-after-party.jpg" style="max-width: 100%; max-height: 300px;" >   -->
 		</div>
 	</div>
-	<div class="col-xs-12" style="background-color: #F7F7F7; margin-bottom: 60px;">
-		<div class="row">
-			<div class="col-xs-12" style="text-align: center;">
-				<img id="imgUpload" ng-pinch-zoom style="width: 100%; margin-bottom: 10px;" id="uploadImg" ng-src="{{tempimagefilepath}}" >
-			<!--  		<img src="http://media3.popsugar-assets.com/files/2014/01/13/638/n/1922398/3cb9c131aea5e4ed_462328969_10.jpg.xxxlarge_2x/i/Chris-Hemsworth-game-fan-selfie-NBC-Globes-after-party.jpg" style="max-width: 100%; max-height: 300px;" >   -->
+	<div class="row">
+		<div class="col-xs-12" style="margin-top: 8px;">
+			<div class="col-xs-3">
+				<img src="http://graph.facebook.com/{{ usuario.facebook_id }}/picture?type=normal" style="max-width: 40px; margin: 5px 10px;" > 
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-12" style="margin-top: 8px;">
-				<div class="col-xs-3">
-					<!-- <img src="http://graph.facebook.com/{{ usuario.facebook_id }}/picture?type=normal" style="max-width: 40px; margin: 5px 10px;" >  -->
-				</div>
-				<div class="col-xs-9" style="margin-top: 8px;">
-					<input class="timeline_input_comentario" type="text" ng-model="comentario_foto" placeholder="ingrese su comentario...">
-				</div>		
-				<div class="col-xs-12">
-					<button onclick="enviarMultimedia('test')" class="btn btn-success btn-circle-xs" style="width: 100%; height: 42px; margin-top: 5px;"><i class="fa fa-comment"></i> Enviar Foto</button>
-				</div>			
-			</div>	
-		</div>
+			<div class="col-xs-9" style="margin-top: 8px;">
+				<input class="timeline_input_comentario" type="text" ng-model="comentario_foto" placeholder="ingrese su comentario...">
+			</div>		
+			<div class="col-xs-12">
+				<button ng-disabled="banCargando"  ng-click="enviarMultimedia(comentario_foto)" class="btn btn-success btn-circle-xs" style="width: 100%; height: 42px; margin-top: 5px;"><i class="fa fa-comment"></i> Enviar Foto</button>
+			</div>			
+		</div>	
 	</div>
-	<script type="text/javascript" src="../../cordova.js"></script>
-	<script>
-		function onDeviceReady() {
-			var logo = document.getElementById('imgUpload');
-			logo.src = window.localStorage.getItem("imageURI");
-		}			
-		
-		function enviarMultimedia(pComentario){
-			var urlImagen = window.localStorage.getItem("imageURI");
-			//$scope.banCargando = true;
-			var options = new FileUploadOptions();
-			options.fileKey="file";
-			options.fileName=urlImagen.substr(urlImagen.lastIndexOf('/')+1);
-			options.mimeType="image/jpeg";
-			options.chunkedMode = false;
-			
-			var params = {};
-			params.token = window.localStorage.getItem("token");
-			params.multimediascategoria_id = 2;
-			params.multimediastipo_id = 1;
-			params.comentario = pComentario;				
-			params.evento_id = 6;
-			options.params = params;
-			
-			// Genero el objeto foto para insertar en BD
-			/*$scope.ultimaFoto.id = 0;
-			$scope.ultimaFoto.comentario = pComentario;
-			$scope.ultimaFoto.evento_id = $scope.evento.id;
-			$scope.ultimaFoto.ruta = $scope.tempimagefilepath;
-			$scope.ultimaFoto.rotacion = "0";
-			$scope.ultimaFoto.estado = 0;*/
-							
-			var ft = new FileTransfer();
-			ft.upload(urlImagen, encodeURI("http://190.12.101.74/ais/lukas/api/subirarchivo/upload_imagen"), uploadSuccess, uploadFail, options);						
-		};	
-		
-		function uploadSuccess(r){
-			//console.log("Response = " + r.response);
-			alert("ok!");
-			//$scope.cerrarModal();				
-			/*toaster.pop({
-				type: r.response.mensaje.tipo,
-				body: r.response.mensaje.texto,
-				showCloseButton: true
-			});		*/	
-			//$scope.ultimaFoto.estado = 0;
-			//databaseFactory.guardarFoto($scope.ultimaFoto);
-		}
-		
-		function uploadFail(){
-			alert("false!");
-			//$scope.cerrarModal();
-			/*$scope.ultimaFoto.estado = 1;
-			databaseFactory.guardarFoto($scope.ultimaFoto);	
-			console.log("Fallo el upload de foto");	
-			toaster.pop({
-				type: 'error',
-				body: 'No pudo subirse la foto, la app intenará enviarla luego, para ver su estado ingresa a "Tus Fotos"',
-				showCloseButton: true
-			});*/					
-		}	
-	</script>
-</body>
+</div>

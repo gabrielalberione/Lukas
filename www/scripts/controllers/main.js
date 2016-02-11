@@ -225,8 +225,8 @@ app.controller('MainController',  [
 			//$scope.openUpload();
 			//$scope.tempimagefilepath = imageURI;
 			store.set('imageURI', imageURI);
-			//$location.path("/upload");			
-			window.open("views/multimedias/upload.html","_self");
+			$location.path("/upload");			
+			//window.open("views/multimedias/upload.html","_self");
 		}
 
 		function onFail(message) {
@@ -262,7 +262,7 @@ app.controller('MainController',  [
 				options.fileKey="file";
 				options.fileName=$scope.tempimagefilepath.substr($scope.tempimagefilepath.lastIndexOf('/')+1);
 				options.mimeType="image/jpeg";
-				options.chunkedMode = false;
+				options.chunkedMode = true;
 				
 				var params = {};
 				params.token = autenticacionFactory.getToken();
