@@ -222,12 +222,14 @@ app.controller('MainController',  [
 		}
 		
 		function onSuccess(imageURI) {
-			$scope.openUpload();
-			$scope.tempimagefilepath = imageURI;
+			//$scope.openUpload();
+			//$scope.tempimagefilepath = imageURI;
+			store.set('imageURI', imageURI);
+			$location.path("/upload");
 		}
 
 		function onFail(message) {
-			alert('Failed because: ' + message);		
+			//alert('Failed because: ' + message);		
 		}
 		
 		$scope.test = function () {

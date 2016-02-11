@@ -114,6 +114,11 @@ var app = angular.module('APP', [
 				controller: 'MultimediasController',
 				authorization: true
 			})		
+			.when("/upload", {
+				templateUrl: 'views/multimedias/upload.html',
+				controller: 'MultimediasController',
+				authorization: true
+			})		
 			.otherwise({
 				redirectTo: '/',
 				authorization: true

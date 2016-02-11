@@ -1,14 +1,14 @@
-<div class="col-xs-12" style="background-color: #F7F7F7;">
-	<div class="row" style="background-color: #EAE9E9; border-bottom: 1px solid #B1ADAE; ">
-		<div class="col-xs-12">
-			<div style="float: left;">
-				<div class="btn btn-info btn-circle-xs" style="cursor: default;">Subir foto</div>		
-			</div>		
-			<div style="float: right;">
-				<a ng-click="cerrarModal()" class="btn btn-danger btn-circle-xs"><i class="fa fa-times"></i> Cancelar</a>		
-			</div>		
-		</div>
+<div class="row" style="background-color: #EAE9E9; border-bottom: 1px solid #B1ADAE; ">
+	<div class="col-xs-12">
+		<div style="float: left; margin: 0px 15px;">
+			<div class="btn btn-info btn-circle-xs" style="cursor: default;">Fotos sacadas</div>		
+		</div>		
+		<div style="float: right; margin: 0px 15px;">
+			<a ng-href="#/" class="btn btn-danger btn-circle-xs"><i class="fa fa-arrow-left"></i> Volver</a>		
+		</div>		
 	</div>
+</div>
+<div class="col-xs-12" style="background-color: #F7F7F7; margin-bottom: 60px;">
 	<div class="row">
 		<div class="col-xs-12" style="text-align: center;">
 			<img id="imgUpload" ng-pinch-zoom style="width: 100%; margin-bottom: 10px;" id="uploadImg" ng-src="{{tempimagefilepath}}" >

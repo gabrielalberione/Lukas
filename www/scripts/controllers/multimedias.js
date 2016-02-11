@@ -8,11 +8,17 @@
  * Controller of the APP
  */
 app.controller('MultimediasController',  [
-			'$scope', 'store', '$http', '$uibModal', 'databaseFactory', 'EventosService', 'ngProgressFactory', '$location', 'CONFIG', 'toaster', 'usuariosFactory', 'multimediasFactory', 'autenticacionFactory', 
-	function($scope, store, $http, $uibModal, databaseFactory, EventosService, ngProgressFactory,  $location,  CONFIG, toaster, usuariosFactory, multimediasFactory, autenticacionFactory){			
+			'$scope', 'store', '$http', '$uibModal', 'databaseFactory', 'EventosService', 'UsuariosService', 'ngProgressFactory', '$location', 'CONFIG', 'toaster', 'usuariosFactory', 'multimediasFactory', 'autenticacionFactory', 
+	function($scope, store, $http, $uibModal, databaseFactory, EventosService, UsuariosService, ngProgressFactory,  $location,  CONFIG, toaster, usuariosFactory, multimediasFactory, autenticacionFactory){			
 		$scope.misFotos = {};
+		
 		$scope.evento = EventosService.get();
+		$scope.usuario = UsuariosService.get();
+		
 		parent.pageActual = 'multimedias';	
+		
+		$scope.tempimagefilepath = store.get('imageURI');
+		
 		
 		$scope.listarFotos = function(){
 			var promise = databaseFactory.getFotos();		
@@ -75,7 +81,61 @@ app.controller('MultimediasController',  [
 				body: 'No pudo subirse la foto, la app intenará enviarla luego, para ver su estado ingresa a "Tus Fotos"',
 				showCloseButton: true
 			});				
-		}			
+		}	
+
+		$scope.enviarMultimedia = function (pComentario){
+			$scope.banCargando = true;
+			var options = new FileUploadOptions();
+			options.fileKey="file";
+			options.fileName=$scope.tempimagefilepath.substr($scope.tempimagefilepath.lastIndexOf('/')+1);
+			options.mimeType="image/jpeg";
+			options.chunkedMode = false;
+			
+			var params = {};
+			params.token = autenticacionFactory.getToken();
+			params.multimediascategoria_id = 2;
+			params.multimediastipo_id = 1;
+			params.comentario = pComentario;				
+			params.evento_id = $scope.evento.id;
+			options.params = params;
+			
+			// Genero el objeto foto para insertar en BD
+			$scope.ultimaFoto.id = 0;
+			$scope.ultimaFoto.comentario = pComentario;
+			$scope.ultimaFoto.evento_id = $scope.evento.id;
+			$scope.ultimaFoto.ruta = $scope.tempimagefilepath;
+			$scope.ultimaFoto.rotacion = "0";
+			$scope.ultimaFoto.estado = 0;
+							
+			var ft = new FileTransfer();
+			ft.upload($scope.tempimagefilepath, encodeURI(CONFIG.APIURL + "/subirarchivo/upload_imagen"), uploadSuccess, uploadFail, options);						
+		};	
+		
+		function uploadSuccess(r){
+			//console.log("Response = " + r.response);
+			alert("ok!");
+			//$scope.cerrarModal();				
+			/*toaster.pop({
+				type: r.response.mensaje.tipo,
+				body: r.response.mensaje.texto,
+				showCloseButton: true
+			});		*/	
+			$scope.ultimaFoto.estado = 0;
+			databaseFactory.guardarFoto($scope.ultimaFoto);
+		}
+		
+		function uploadFail(){
+			alert("false!");
+			//$scope.cerrarModal();
+			$scope.ultimaFoto.estado = 1;
+			databaseFactory.guardarFoto($scope.ultimaFoto);	
+			console.log("Fallo el upload de foto");	
+			toaster.pop({
+				type: 'error',
+				body: 'No pudo subirse la foto, la app intenará enviarla luego, para ver su estado ingresa a "Tus Fotos"',
+				showCloseButton: true
+			});					
+		}		
 		
 	}
 ]);
