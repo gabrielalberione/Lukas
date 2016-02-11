@@ -225,7 +225,8 @@ app.controller('MainController',  [
 			//$scope.openUpload();
 			//$scope.tempimagefilepath = imageURI;
 			store.set('imageURI', imageURI);
-			$location.path("/upload");
+			//$location.path("/upload");			
+			window.open("views/multimedias/upload.html","_self");
 		}
 
 		function onFail(message) {
