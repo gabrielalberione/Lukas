@@ -8,52 +8,72 @@
  * Controller of the APP
  */
 app.controller('MainController',  [
-			'$rootScope', '$scope', 'store', '$http', '$uibModal', 'databaseFactory', 'mesasFactory', 'ngProgressFactory', '$location', 'CONFIG', 'toaster', 'usuariosFactory', 'UsuariosService', 'eventosFactory', 'EventosService', 'markersFactory', 'multimediasFactory', 'autenticacionFactory', 
-	function($rootScope,  $scope, store, $http, $uibModal, databaseFactory, mesasFactory, ngProgressFactory,  $location,  CONFIG, toaster, usuariosFactory, UsuariosService, eventosFactory, EventosService, markersFactory, multimediasFactory, autenticacionFactory){		
+			'$rootScope', '$scope', 'store', '$http', '$uibModal', 'MarkersService', 'CarruselService', 'databaseFactory', 'mesasFactory', 'ngProgressFactory', '$location', 'CONFIG', 'toaster', 'usuariosFactory', 'UsuariosService', 'eventosFactory', 'EventosService', 'markersFactory', 'multimediasFactory', 'autenticacionFactory', 
+	function($rootScope,  $scope, store, $http, $uibModal, MarkersService, CarruselService, databaseFactory, mesasFactory, ngProgressFactory,  $location,  CONFIG, toaster, usuariosFactory, UsuariosService, eventosFactory, EventosService, markersFactory, multimediasFactory, autenticacionFactory){		
 		$rootScope.urlFile = CONFIG.URLFILE;
 		parent.pageActual = 'main';		
-		
 		$scope.evento = EventosService.get();	
 
 		if($rootScope.usuarioLogueado){
 			$scope.usuario = UsuariosService.get();
 		}		
-		
-		$scope.multimedias = [];			
-		$scope.banMarkesLoading = true;
-		$scope.banCarruselLoading = true;
+				
 		$scope.banCargando = false;
-
+		
+		$scope.banCarruselLoading = false;
 		// obtiene las multimedias para el carrusell
-		$scope.getMultimedias = function(){			
+		$scope.getMultimedias = function(){		
+			$scope.banCarruselLoading = true;
 			var param = {		
-				filter: ["evento_id="+ $scope.evento.id,"multimediascategoria_id=1"]
+				filter: ["evento_id="+ $scope.evento.id+"##multimediascategoria_id=1"]
 			};		
 			multimediasFactory.listar(param).then(function(res){
 				$scope.banCarruselLoading = false;
-				$scope.multimedias = res.data.multimedias;
+				$scope.multimedias = res;
+				CarruselService.set($scope.multimedias);
 			});
 		};
 		
-		$scope.getMultimedias();
+		$scope.multimedias = CarruselService.get();		
 		
-		$scope.markers = [];
-		
+		if (typeof $scope.multimedias != 'undefined' && $scope.multimedias.length > 0) {
+			//$scope.getMultimedias();
+		}else{
+			$scope.getMultimedias();
+		}		
+			
+		/* MARKERS */		
+		$scope.banMarkesLoading = false;
 		$scope.getPois = function(){
+			$scope.banMarkesLoading = true;
 			var param = {		
 				filter: ["evento_id="+ $scope.evento.id]
 			};		
 			markersFactory.listar(param).then(function(res){		
-				$scope.markers = res.data.markers;
+				$scope.markers = res;
+				MarkersService.set($scope.markers);
 				$scope.banMarkesLoading = false;
 			});
-		};
+		};				
 		
-		$scope.getPois();	
-
+		$scope.markers = MarkersService.get();		
+		
+		if (typeof $scope.markers != 'undefined' && $scope.markers.length > 0) {
+			//$scope.getPois();
+		}else{
+			$scope.getPois();
+		}		
+		
+		function onConfirmDesloguear(button) {
+			if(button==2){//If User selected No, then we just do nothing
+				return;
+			}else{
+				$scope.logoutEvento();// Otherwise we quit the app.
+			}
+		}			
 		$scope.loginFace = function(){
 			if($rootScope.usuarioLogueado){
-				$scope.logoutEvento();
+				navigator.notification.confirm("¿Estas seguro que deseas salir de Facebook?", onConfirmDesloguear, "Confirmación", "Si,No");				
 			}else{
 				var face_id = 0;
 				var fbLoginSuccess = function (userData) {	
@@ -175,12 +195,16 @@ app.controller('MainController',  [
 		
 		$scope.modalInstance = {};
 		
-		$scope.abrirMapa = function(pLatitude, pLongitude, pEtiqueta, pId){
+		$scope.abrirMapa = function(pLatitude, pLongitude, pEtiqueta, pId, pFecha){
 			parent.pagePadreModal = parent.pageActual;
 			parent.pageActual = 'modal';							
 
 			$scope.punto = {};
 			$scope.map = {};
+			
+			$scope.mapa_etiqueta = pEtiqueta;
+			$scope.mapa_tiempo = pFecha;
+			$scope.addressLongLat = pLatitude+","+pLongitude;
 		
 			$scope.punto = {
 				id: pId,
@@ -196,7 +220,7 @@ app.controller('MainController',  [
 					latitude: pLatitude,
 					longitude: pLongitude
 				},
-				zoom: 13,
+				zoom: 15,
 				options: {
 					scrollwheel: false,
 					mapTypeControl: false,
@@ -214,24 +238,7 @@ app.controller('MainController',  [
 				size: 'large'
 			});	
 
-		}
-		
-		$scope.sacarFoto = function(){
-			navigator.camera.getPicture(onSuccess, onFail, { quality: 50, destinationType: Camera.DestinationType.FILE_URI, 
-				correctOrientation: true  });
-		}
-		
-		function onSuccess(imageURI) {
-			//$scope.openUpload();
-			//$scope.tempimagefilepath = imageURI;
-			store.set('imageURI', imageURI);
-			$location.path("/upload");			
-			//window.open("views/multimedias/upload.html","_self");
-		}
-
-		function onFail(message) {
-			//alert('Failed because: ' + message);		
-		}
+		}				
 		
 		$scope.test = function () {
 			var modalInstanceUpload = $uibModal.open({
@@ -243,7 +250,7 @@ app.controller('MainController',  [
 			});
 		}
 		
-		$scope.openUpload = function (pMultimediaId) {
+		/*$scope.openUpload = function (pMultimediaId) {
 			parent.pagePadreModal = parent.pageActual;
 			parent.pageActual = 'modal';
 		    $scope.modalInstance = $uibModal.open({
@@ -292,7 +299,7 @@ app.controller('MainController',  [
 					type: r.response.mensaje.tipo,
 					body: r.response.mensaje.texto,
 					showCloseButton: true
-				});		*/	
+				});			
 				$scope.ultimaFoto.estado = 0;
 				databaseFactory.guardarFoto($scope.ultimaFoto);
 			}
@@ -310,7 +317,35 @@ app.controller('MainController',  [
 				});					
 			}
 
-		};	
+		};	*/
+		
+		$scope.openLoginFace = function (pMultimediaId) {
+			parent.pagePadreModal = parent.pageActual;
+			parent.pageActual = 'modal';
+		    $scope.modalInstance = $uibModal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: './views/alertas/facebook.html',
+				//controller: 'ModalContactoController',
+				scope: $scope,
+				size: 'large'
+			});			
+			
+			$scope.ultimaFoto = {};
+			
+			$scope.ingresarFace = function (pComentario){
+				$scope.loginFace();
+				$scope.modalInstance.close();
+			};	
+			
+		};
+		
+		$scope.navegar = function(addressLongLat){
+			if(device.platform == 'iOS'){
+				window.open("http://maps.apple.com/?q="+addressLongLat, '_system');
+			}else{
+				window.open("geo:0,0?q="+addressLongLat+"("+$scope.mapa_etiqueta+")", '_system');
+			}
+		}
 		
 	}
 ]);

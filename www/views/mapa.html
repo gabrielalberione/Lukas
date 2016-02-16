@@ -4,13 +4,21 @@
 	}
 </style>
 
-<div class="col-xs-12" style="background-color: #F7F7F7; margin: 5px 0px; border: 2px solid #777171;">
-	<div class="row" style="background-color: #EAE9E9; border-bottom: 1px solid #B1ADAE; ">
+<div class="col-xs-12" style="background-color: #F7F7F7; margin: 5px 0px;">
+	<!-- <div class="row" style="background-color: #EAE9E9; border-bottom: 1px solid #B1ADAE; ">
 		<div class="col-xs-12">
 			<button style="margin: 10px; float: right" class="btn btn-danger btn-circle-xs" ng-click="cerrarModal()"><i class="fa fa-times" style="font-size: 14px; margin-top: 0px;"></i></button>
-			<button style="margin: 10px; float: left" class="btn btn-info btn-circle-xs" ng-click="navegarADestino()"><i class="fa fa-car" style="font-size: 14px; margin-top: 0px;"></i> Navegar</button>
+			<button style="margin: 10px; float: left" class="btn btn-info btn-circle-xs" ng-click="navegar(addressLongLat)"><i class="fa fa-car" style="font-size: 14px; margin-top: 0px;"></i> Navegar</button>
 		</div>
-	</div>
+	</div> -->
+	<div class="row" style="background-color: #500310; border-bottom: 4px solid #940F25;">
+		<div class="col-xs-12">
+			<div style="float: left; margin: 5px 10px;">
+				<a ng-click="cerrarModal()" class="" href="#/" style="color: #FFF; font-size: 30px;float: left;padding-bottom: 0px;"><i class="fa fa-angle-left"></i></a>	
+			</div>		
+			<button style="margin: 10px; float: right" class="btn btn-info btn-circle-xs" ng-click="navegar(addressLongLat)"><i class="fa fa-car" style="font-size: 14px; margin-top: 0px;"></i> Navegar</button>
+		</div>
+	</div>	
 	<div class="row">
 		<div id="mapa" style="height: 350px;">
 			<div class="map_container">
@@ -20,5 +28,11 @@
 				</ui-gmap-google-map>						
 			</div>  
 		</div>	
+	</div>	
+	<div class="row" style="background-color: #500310; border-top: 4px solid #940F25; color: #fff;">
+		<div class="col-xs-12" style="padding: 0px 15px; padding-top: 10px;">
+			<p><b>Lugar: </b>{{mapa_etiqueta}}</p>
+			<p><b>Fecha: </b>{{mapa_tiempo | asDate | date:'dd/MM/yyyy'}} a las {{mapa_tiempo | asDate | date:'HH:mm' }}</p>
+		</div>
 	</div>	
 </div>	

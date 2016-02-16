@@ -95,8 +95,20 @@
 }
 
 .btn-naranja{
-	background-color: #FF6500 !important;
-	border-color: #FF6500 !important;
+	background-color: #FE9A2E !important;
+	border-color: #FE9A2E !important;
+	color: #FFF !important;		
+}
+
+.btn-amarillo{
+	background-color: #D7DF01 !important;
+	border-color: #D7DF01 !important;
+	color: #FFF !important;		
+}
+
+.btn-celeste{
+	background-color: #58ACFA !important;
+	border-color: #58ACFA !important;
 	color: #FFF !important;		
 }
 

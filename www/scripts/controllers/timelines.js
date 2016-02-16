@@ -8,8 +8,8 @@
  * Controller of the APP
  */
 app.controller('TimelinesController',  [
-			'$rootScope', '$scope', 'store', '$http', '$uibModal', 'databaseFactory', '$location', 'CONFIG', 'toaster', 'UsuariosService', 'EventosService', 'ngProgressFactory', 'likesFactory', 'comentariosFactory', 'timelinesFactory', 'autenticacionFactory', 
-	function($rootScope,  $scope, store, $http,  $uibModal, databaseFactory, $location,  CONFIG, toaster, UsuariosService, EventosService, ngProgressFactory, likesFactory, comentariosFactory, timelinesFactory, autenticacionFactory){					
+			'$rootScope', '$scope', 'store', '$http', '$uibModal', 'TimelineService', 'databaseFactory', 'usuariosFactory', '$location', 'CONFIG', 'toaster', 'UsuariosService', 'EventosService', 'ngProgressFactory', 'likesFactory', 'comentariosFactory', 'timelinesFactory', 'autenticacionFactory', 
+	function($rootScope,  $scope, store, $http,  $uibModal, TimelineService, databaseFactory, usuariosFactory, $location,  CONFIG, toaster, UsuariosService, EventosService, ngProgressFactory, likesFactory, comentariosFactory, timelinesFactory, autenticacionFactory){					
 		$scope.multimedias = [];
 		parent.pageActual = 'timeline';		
 		var listarOptions = {};
@@ -40,7 +40,8 @@ app.controller('TimelinesController',  [
 			}
 			timelinesFactory.listar(listarOptions).then(function(res){
 				$scope.banCargando = false;
-				$scope.multimedias = $scope.multimedias.concat(res.data.multimedias);
+				$scope.multimedias = $scope.multimedias.concat(res);
+				store.set('timeline',$scope.multimedias);
 			});
 		};				
 		
@@ -130,16 +131,97 @@ app.controller('TimelinesController',  [
 					}
 				);						
 			}else{
-				toaster.pop({
-					type: "info",
-					body: "Debe iniciar sesión como usuario para dar likes y comentar!",
-					showCloseButton: true
-				});
+				$scope.openLoginFace();
 			}
 		};
 		
-		var auxComentario = {};
+		var auxComentario = {};				
 		
+		$scope.loginFace = function(){
+			if($rootScope.usuarioLogueado){
+				$scope.logoutEvento();
+			}else{
+				var face_id = 0;
+				var fbLoginSuccess = function (userData) {	
+					//alert(JSON.stringify(userData));									
+					$.each(userData.authResponse, function(key, val) {
+						if(key == "userID"){
+							facebookConnectPlugin.api(val+"/?fields=id,email,first_name,last_name", ["public_profile"],
+							function (result) {
+								//alert(JSON.stringify(result));		
+								var face_id = result.id;	
+								var nombre = result.first_name;
+								var apellido = result.last_name;
+								var email = result.email;
+								var auxUser = {};
+								auxUser.facebook_id = face_id;
+								auxUser.nombres = nombre;
+								auxUser.apellido = apellido;
+								auxUser.email = email;
+								auxUser.id = 0;
+								usuariosFactory.guardar(auxUser).then(
+									function(res){
+										autenticacionFactory.login_usuario(face_id).then(
+											function(res) {
+												if (typeof res.data.token != 'undefined') {
+													/* si existe error lo muestra */
+													if (res.data.error != null){
+														/* usuario/password incorrecto 
+														toaster.pop({
+															type: res.data.error.tipo,
+															body: res.data.error.mensaje,
+															showCloseButton: true
+														});*/
+														alert("Error!");
+													} else{
+														$location.path("/");	
+														setTimeout(function (){
+															location.reload(true);
+														 }, 200);
+													}
+												} else{
+													alert("Error!");
+												}					
+											}
+										);
+									}, function(res){
+										alert("Problemas para conectar con el servidor: "+res);
+									}
+								);													
+							},
+							function (error) {
+								alert("Failed: " + error);
+							});								 
+						}
+					})
+				};
+			
+				facebookConnectPlugin.login(["public_profile", "email"],
+					fbLoginSuccess,
+					function (error) { alert("" + error) }
+				);	
+			}				
+		}
+		
+		$scope.openLoginFace = function (pMultimediaId) {
+			parent.pagePadreModal = parent.pageActual;
+			parent.pageActual = 'modal';
+		    $scope.modalInstance = $uibModal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: './views/alertas/facebook.html',
+				//controller: 'ModalContactoController',
+				scope: $scope,
+				size: 'large'
+			});			
+			
+			$scope.ultimaFoto = {};
+			
+			$scope.ingresarFace = function (pComentario){
+				$scope.loginFace();
+				$scope.modalInstance.close();
+			};	
+			
+		};
 		
 	}
 ]);

@@ -8,13 +8,39 @@
  * Controller of the APP
  */
 app.controller('backgroundController',  [
-			'$scope','$rootScope', '$route','CONFIG', "$q",'$location', 'databaseFactory', 'autenticacionFactory', 'EventosService', 'store','$interval',
-	function($scope,  $rootScope, $route, CONFIG, $q, $location, databaseFactory, autenticacionFactory, EventosService, store,  $interval){		
+			'$scope','$rootScope', '$route','CONFIG', '$uibModal', "$q",'$location', 'databaseFactory', 'autenticacionFactory', 'EventosService', 'store','$interval',
+	function($scope,  $rootScope, $route, CONFIG, $uibModal, $q, $location, databaseFactory, autenticacionFactory, EventosService, store,  $interval){		
 		
 		$scope.prepararDB = function(){
 			// Creo la BD si no existe
 			databaseFactory.openDatabase();
 			databaseFactory.crearTablas();		
+		}
+		
+		$scope.cerrarModal = function () {
+			$scope.modalInstance.close();
+		};	
+		
+		$scope.salirApp = function(){
+			navigator.app.exitApp();	
+		}
+		
+		$scope.alertaSalida = function(){
+			parent.pagePadreModal = parent.pageActual;
+			parent.pageActual = 'modal';
+		    $scope.modalInstance = $uibModal.open({
+				animation: $scope.animationsEnabled,
+				templateUrl: './views/alertas/salir.html',
+				//controller: 'ModalContactoController',
+				scope: $scope,
+				size: 'large'
+			});	
+
+			/*$scope.modalInstance.result.then(function (selectedItem) {
+				  //
+				}, function () {
+				  banCartel = false;
+			});	*/	
 		}
 		
 		/* verifica si hay fotos para enviar */
@@ -34,7 +60,7 @@ app.controller('backgroundController',  [
 				  alert(reason);
 				});		
 			}				
-		}, 10000);				
+		}, 5000);				
 		
 		/* verifica si hay conexion */
 		$scope.verificiarConexion = function(){

@@ -12,22 +12,20 @@ app.controller('loginController', [
 		
 		$scope.banCargando = false;
 		
-		$scope.mensaje = '';
-		$scope.mensajeTipo = 'info';
 		$scope.login = function(evento){
 			$scope.banCargando = true;
-			$scope.mensaje = '';
 			autenticacionFactory.login_evento(evento).then(
 			function(res) {
-					if (typeof res.data.token != 'undefined') {
+					if (res != "error") {						
 						/* si existe error lo muestra */
-						if (res.data.error != null){
+						if (res.data.token == null){
 							/* usuario/password incorrecto */
 							toaster.pop({
-								type: res.data.error.tipo,
-								body: res.data.error.mensaje,
+								type: 'error',
+								body: 'La contraseña no corresponde a ningún evento!',
 								showCloseButton: true
 							});
+							$scope.banCargando = false;
 						} else{
 							$rootScope.eventoLogueado = true;
 							EventosService.set(autenticacionFactory.getEvento());	
@@ -36,9 +34,10 @@ app.controller('loginController', [
 					} else{
 						toaster.pop({
 							type: 'error',
-							body: 'Error: intente nuevamente.',
+							body: 'No se puede conectar al servicor, verifique su conexión a internet!',
 							showCloseButton: true
 						});
+						$scope.banCargando = false;
 					}					
 				}
 			);

@@ -42,9 +42,10 @@ app.factory("autenticacionFactory", [
 				// called asynchronously if an error occurs
 				// or server returns response with an error status.
 				if (status === 400) {
-					defered.reject(response);
+					defered.resolve("error");
 				} else {
-					throw new Error("Fallo obtener los datos:" + response.status);
+					defered.resolve("error");
+					//throw new Error("Fallo obtener los datos:" + response.status);
 				}
 			});
 		 

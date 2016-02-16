@@ -23,7 +23,7 @@
 		</div>
 	</div>
 	<div ng-if="usuarioLogueado == true">
-		<div class="col-xs-12" style="margin-top: 8px;">
+		<!--<div class="col-xs-12" style="margin-top: 8px;">
 			<div class="col-xs-3">
 				<img src="http://graph.facebook.com/{{ usuario.facebook_id }}/picture?type=normal" style="max-width: 40px; margin: 5px 10px;" >
 			</div>
@@ -33,7 +33,15 @@
 			<div class="col-xs-2">
 				<button ng-click="enviarComentario(comentario_nuevo)" class="btn btn-success btn-circle-xs" ng-disabled="comentario_nuevo == '' || comentario_nuevo == null" style="height: 42px; margin-top: 5px;"><i class="fa fa-comment"></i></button>
 			</div>			
-		</div>	
+		</div> -->
+		<div class="col-xs-12" style="margin-top: 15px;padding: 0px; margin-bottom: 4px;">
+			<div class="col-xs-10">				
+				<input class="timeline_input_comentario ng-pristine ng-untouched ng-valid" type="text" ng-model="comentario_nuevo" placeholder="ingrese su comentario...">
+			</div>		
+			<div class="col-xs-2" style="margin-top: -3px; padding-right: 10px;">
+				<button ng-click="enviarComentario(comentario_nuevo)" class="btn btn-success btn-circle-xs" ng-disabled="comentario_nuevo == '' || comentario_nuevo == null" style="height: 42px;/* margin-top: 5px; */" disabled="disabled"><i class="fa fa-comment"></i></button>
+			</div>			
+		</div>		
 	</div>
 	<div ng-if="usuarioLogueado == false">
 		<div class="col-xs-12" style="margin-top: 8px;">

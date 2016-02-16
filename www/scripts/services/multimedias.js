@@ -1,33 +1,53 @@
 // Invoca el modo JavaScript 'script'
 'use strict';
 
+app.service('CarruselService', function () {
+	var carrusel = {};
+
+	return {
+		get: function () {
+			return carrusel;
+		},
+		set: function(f) {
+			carrusel = f;
+		}
+	};
+});
+
 app.factory('multimediasFactory', [
-			"$http","$q","md5","CONFIG","store",
-	function($http,  $q,  md5,  CONFIG,  store){
+			"$http","$q","md5","CONFIG","store", '$rootScope',
+	function($http,  $q,  md5,  CONFIG,  store, $rootScope){
 		return {
 			listar: function(listarOptions){
 				var defered = $q.defer();
 				var promise = defered.promise;
-				
-				var url = CONFIG.APIURL+'/multimedias.json';
-				
-				$http({
-					method: 'GET',
-					url: url,
-					params: listarOptions,
-					headers: {
-						'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-					}
-				})
-				.then(function successCallback(response) {
-					/* si viene el token lo actualiza, porque puede ser que un WS no utilice token por ser publico */
-					if (typeof response.data.token != 'undefined') {
-						store.set('token', response.data.token);
-					}
-					defered.resolve(response);
-				}, function errorCallback(response) {
-					defered.reject(response);
-				});
+				if($rootScope.banConexion){		
+					var url = CONFIG.APIURL+'/multimedias.json';
+					
+					$http({
+						method: 'GET',
+						url: url,
+						params: listarOptions,
+						headers: {
+							'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+						}
+					})
+					.then(function successCallback(response) {
+						/* si viene el token lo actualiza, porque puede ser que un WS no utilice token por ser publico */
+						if (typeof response.data.token != 'undefined') {
+							store.set('token', response.data.token);
+						}
+						
+						/* Guarda en el store */
+						store.set('carrusel', response.data.multimedias);
+						
+						defered.resolve(response.data.multimedias);
+					}, function errorCallback(response) {
+						defered.reject(response);
+					});
+				}else{
+					defered.resolve(store.get('carrusel'));
+				}
 			 
 				return promise;
 			}

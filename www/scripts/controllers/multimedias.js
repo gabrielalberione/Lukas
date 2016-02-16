@@ -113,15 +113,15 @@ app.controller('MultimediasController',  [
 		
 		function uploadSuccess(r){
 			//console.log("Response = " + r.response);
-			alert("ok!");
 			//$scope.cerrarModal();				
-			/*toaster.pop({
-				type: r.response.mensaje.tipo,
-				body: r.response.mensaje.texto,
+			toaster.pop({
+				type: "success",
+				body: "Su foto se ha compartido con éxito!",
 				showCloseButton: true
-			});		*/	
+			});			
 			$scope.ultimaFoto.estado = 0;
 			databaseFactory.guardarFoto($scope.ultimaFoto);
+			$location.path("/");	
 		}
 		
 		function uploadFail(){
@@ -134,7 +134,8 @@ app.controller('MultimediasController',  [
 				type: 'error',
 				body: 'No pudo subirse la foto, la app intenará enviarla luego, para ver su estado ingresa a "Tus Fotos"',
 				showCloseButton: true
-			});					
+			});		
+			$location.path("/");				
 		}		
 		
 	}

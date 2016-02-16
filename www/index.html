@@ -73,7 +73,7 @@
 	
 	<div style="display:none" id="divBackground" ng-controller="backgroundController"></div>
 	
-	<div ng-show="banConexion == false && eventoLogueado" style="display: none; background-color: #A72424; color: white;  height: 50px; position: fixed; width: 100%; z-index: 100;">
+	<div class="ng-cloak" ng-show="banConexion == false && eventoLogueado" style="background-color: #A72424; color: white;  height: 50px; position: fixed; width: 100%; z-index: 100; bottom: 0px;">
 		<img src="./images/logo_off.png" alt="NO HAY IMAGEN" style="max-height: 30px; float: left; margin: 9px; margin-right: 15px;" class="img-responsive">
 		<div style="font-size: 11px; padding-top: 15px;"><b>Lukas necesita de internet para despertar!</b></div>
 	</div>	
@@ -81,20 +81,17 @@
 	<div id="content" class="app-content" role="main">
 		<div ng-view class="view"></div>
 	</div>
-
+	<!--
 	<footer id="footer" class="app-footer  ng-cloak" role="footer"  ng-if="eventoLogueado">
 		<div class="container">
 			<nav class="navbar navbar-default navbar-fixed-bottom" id="barra_inferior" role="navigation">
-				<div id="div_img_pendiente" style="float:left; color:#000; margin: 8px;">
-					<a ng-href="#/multimedias" class="btn btn-bordo">Tus fotos</a>
-				</div>
 				<div style="float:right;">
 					<a href="javascript:window.open('http://www.lukas.alberione.com.ar/','_self');"><span style="float: right;margin-top: 15px;color: #fff;font-size: 15px;margin-right: 12px;">Lukas</span><img src="./images/logo.png" alt="NO HAY IMAGEN" style="max-height: 30px; margin: 10px; margin-left: 20px; float:right" class="img-responsive"></a>
 				</div>	
 			</nav>
 		</div>
 	</footer>
-
+	-->
     <!-- OL debe cargarse antes que todos
     <script src="libs/openlayers3/ol.js"></script>  -->
 	
@@ -140,6 +137,7 @@
 	<script src="scripts/controllers/timelines.js"></script>
 	<script src="scripts/controllers/multimedias.js"></script>
 	<script src="scripts/controllers/background.js"></script>
+	<script src="scripts/controllers/camara.js"></script>
 
 	<script src="scripts/services/autenticacion.js"></script>
 	<script src="scripts/services/filtros.js"></script>
@@ -166,22 +164,30 @@
 				//
 			}, function(reason) {
 			  alert(reason);
-			});							
+			});		
+			//$("#cartelOffline").show();
 		}
 		
 		var pageActual = 'main';
 		var pagePadreModal = '';
 		var functionCloseModal = '';
-		
-		function onBackKeyDown(){
+		function onBackKeyDown(e){
 		   if(pageActual == 'main'){
-				navigator.app.exitApp();	
+				navigator.notification.confirm("¿Estas seguro que deseas salir?", onConfirm, "Confirmación", "Si,No"); 
 			}else if(pageActual == 'modal'){
 				angular.element($('[ng-view]')).scope().cerrarModal();
 				pageActual = pagePadreModal;
 			}else {
-				navigator.app.backHistory()
+				navigator.app.backHistory();
 			}		
+		}
+
+		function onConfirm(button) {
+			if(button==2){//If User selected No, then we just do nothing
+				return;
+			}else{
+				navigator.app.exitApp();// Otherwise we quit the app.
+			}
 		}		
 	</script>
 	<!-- -->

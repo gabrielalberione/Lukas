@@ -6,16 +6,14 @@
 		</div>	
 		<div id="form_login">
 			<form role="form" name="loginForm" id="login-form" ng-submit="login(evento)" autocomplete="off">
-				<input type="password" name="clave" ng-model="evento.clave" placeholder="Ingrese clave del evento...">
+				<input type="password" name="clave" ng-model="evento.clave" placeholder="Clave del evento...">
 				<button ng-class="{btnDisabled: banCargando == true}" type="submit" ng-disabled="banCargando">
 					<span ng-if="banCargando == false">ENTRAR AL EVENTO</span>
 					<span ng-if="banCargando">ENTRANDO...</span>
 				</button>
 			</form>
+			<a href="http://www.lukas.alberione.com.ar" class="btn btn-lg btn-default" style="margin-top: 20px; width: 100%;">¿Quién es Lukas?</a>
 		</div>
-			
-		<div id="contacto">
-			<a href="#/contratar" class="btn btn-lg btn-default btn-block">¿Quien es Lukas?</a>
-		</div>
+
     </div> <!-- /.container -->
 </div>

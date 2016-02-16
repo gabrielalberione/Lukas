@@ -1,0 +1,26 @@
+<style>
+	.row div{
+		padding: 0px;
+	}
+</style>
+
+<div class="col-xs-12" style="background-color: #F7F7F7; margin: 5px 0px;">
+	<div class="row" style="background-color: #500310; border-bottom: 4px solid #940F25;">
+		<div class="col-xs-12">
+			<div style="float: left;margin: 0px 15px; padding-bottom: 5px;">
+				<a ng-click="cerrarModal()" class="" href="#/" style="color: #FFF; font-size: 30px;float: left;padding-bottom: 0px;"><i class="fa fa-angle-left"></i></a>	
+			</div>			
+			
+			<a href="javascript:window.open('http://www.lukas.alberione.com.ar/','_self');"><img src="./images/logo.png" alt="NO HAY IMAGEN" style="max-height: 35px; float:right;margin: 6px;margin-right: 20px;" class="img-responsive"></a>
+		</div>
+	</div>	
+	<div class="row" style="padding: 15px;">
+		<h4>¿Desea Salir?</h4>
+		<p>Esta por salir de la app, presione salir si desea hacerlo o nuevamente la tecla back.</p>
+	</div>	
+	<div class="row" style="background-color: #EAE9E9; border-bottom: 1px solid #B1ADAE; ">
+		<div class="col-xs-12">
+			<button style="margin: 10px; float: right" class="btn btn-primary btn-circle-xs" ng-click="salirApp()"><i class="fa fa-sign-out" style="font-size: 14px; margin-top: 0px;"></i> Salir</button>
+		</div>
+	</div>	
+</div>	

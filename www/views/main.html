@@ -6,7 +6,7 @@
 		color: #2F2F2F !important;
 	}
 </style>
-<div class="col-xs-12" style="margin-bottom: 70px;">
+<div class="col-xs-12" style="margin-bottom: 25px;">
 	<div class="row">
 		<div class="col-xs-12 less_padding" ng-if="banCarruselLoading">
 			<a class="btn btn-warning btn-circle" style="background-color: black; border-color: black;">
@@ -42,8 +42,11 @@
 				<p class="modulos_texto"><b>Bienvenido {{usuario.nombres}}!</b></p>
 			</a>				
 		</div>	
-		<div class="col-xs-12 less_padding">
+		<div class="col-xs-12 less_padding"  ng-controller="CamaraController">
 			<a ng-click="sacarFoto()" class="btn btn-lila btn-circle"><i class="fa fa-camera"></i><p>Capturar Momento</p></a>		
+		</div>
+		<div class="col-xs-6 less_padding">
+			<a ng-href="#/multimedias" class="btn btn-celeste btn-circle"><i class="fa fa-thumbs-o-down"></i><p>Fotos rechazadas</p></a>		
 		</div>
 		<div class="col-xs-6 less_padding">
 			<a ng-href="#/mesas" class="btn btn-naranja btn-circle"><i class="fa fa-book"></i><p>Mi Mesa</p></a>		
@@ -56,14 +59,14 @@
 		</div>				
 		<div ng-repeat="marker in markers">		
 			<div class="col-xs-6 less_padding">
-				<a ng-click="abrirMapa(marker.Marker.latitud, marker.Marker.longitud, marker.Marker.nombre, marker.Marker.id)" class="btn btn-warning btn-circle">
+				<a ng-click="abrirMapa(marker.Marker.latitud, marker.Marker.longitud, marker.Marker.nombre, marker.Marker.id, marker.Marker.fecha)" class="btn btn-amarillo btn-circle">
 					<i class="fa fa-map-marker" style="margin-top: 10px;"></i><p class="modulos_texto"><b>{{marker.Marker.nombre}}</b><br> <u>Fecha:</u> {{marker.Marker.fecha | asDate | date:'dd/MM/yyyy'}}<br> <u>Hora:</u> {{marker.Marker.fecha | asDate | date:'HH:mm' }}</p>
 				</a>		
 			</div>				
 		</div>
 		
 		<div class="col-xs-6 less_padding">
-			<a ng-href="#/mesas" class="btn btn-verde btn-circle"><i class="fa fa-money"></i><p>Contratar lukas!</p></a>		
+			<a ng-href="http://190.12.101.74/ais/lukas/panel/#/contratar" class="btn btn-verde btn-circle"><i class="fa fa-money"></i><p>Contratar lukas!</p></a>		
 		</div>	
 		<div class="col-xs-12 less_padding">
 			<a ng-click="logoutEvento()" class="btn btn-danger btn-circle"><i class="fa fa-sign-out"></i><p>Salir del Evento</p></a>		
