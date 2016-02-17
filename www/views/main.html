@@ -60,7 +60,7 @@
 		<div ng-repeat="marker in markers">		
 			<div class="col-xs-6 less_padding">
 				<a ng-click="abrirMapa(marker.Marker.latitud, marker.Marker.longitud, marker.Marker.nombre, marker.Marker.id, marker.Marker.fecha)" class="btn btn-amarillo btn-circle">
-					<i class="fa fa-map-marker" style="margin-top: 10px;"></i><p class="modulos_texto"><b>{{marker.Marker.nombre}}</b><br> <u>Fecha:</u> {{marker.Marker.fecha | asDate | date:'dd/MM/yyyy'}}<br> <u>Hora:</u> {{marker.Marker.fecha | asDate | date:'HH:mm' }}</p>
+					<i class="fa fa-map-marker" style="margin-top: 10px;"></i><p class="modulos_texto"><b>{{marker.Marker.nombre}}</b><br> <u>Fecha:</u> {{marker.Marker.fecha}}<br> <u>Hora:</u> {{marker.Marker.fecha}}</p>
 				</a>		
 			</div>				
 		</div>
