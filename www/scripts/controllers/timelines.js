@@ -70,7 +70,7 @@ app.controller('TimelinesController',  [
 			};		
 			
 			timelinesFactory.listar(param).then(function(res){
-				$scope.multimediaActiva = res.data.multimedias[0];
+				$scope.multimediaActiva = res[0];
 			});	
 
 			var paramComentarios = {		

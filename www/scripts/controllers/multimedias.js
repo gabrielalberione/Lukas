@@ -19,10 +19,13 @@ app.controller('MultimediasController',  [
 		
 		$scope.tempimagefilepath = store.get('imageURI');
 		
+		$scope.banCargando = false;
 		
 		$scope.listarFotos = function(){
+			$scope.banCargando = true;
 			var promise = databaseFactory.getFotos();		
 			promise.then(function(greeting) {
+			  $scope.banCargando = false;
 			  $scope.misFotos = greeting;
 			}, function(reason) {
 			  alert(reason);
@@ -70,17 +73,23 @@ app.controller('MultimediasController',  [
 			promise.then(function(greeting) {
 				$scope.listarFotos();
 			}, function(reason) {
-			  alert(reason);
+				alert(reason);
 			});			
 			
 		}
 		
 		$scope.uploadFail = function(){
-			toaster.pop({
+			/*toaster.pop({
 				type: 'error',
 				body: 'No pudo subirse la foto, la app intenará enviarla luego, para ver su estado ingresa a "Tus Fotos"',
 				showCloseButton: true
-			});				
+			});	*/		
+			navigator.notification.alert(
+				'No pudo subirse la foto, la app intenará enviarla luego, para ver su estado ingresa a "Fotos sin Compartir"',  // message
+				alertDismissed,         // callback
+				'Error al subir la imagen',            // title
+				'Ok'                  // buttonName
+			);					
 		}	
 
 		$scope.enviarMultimedia = function (pComentario){
@@ -114,29 +123,46 @@ app.controller('MultimediasController',  [
 		function uploadSuccess(r){
 			//console.log("Response = " + r.response);
 			//$scope.cerrarModal();				
-			toaster.pop({
+			/*toaster.pop({
 				type: "success",
 				body: "Su foto se ha compartido con éxito!",
 				showCloseButton: true
-			});			
+			});*/		
+			navigator.notification.alert(
+				'Su foto se ha compartido con éxito!',  // message
+				alertDismissed,         // callback
+				'Compartido con Éxito',            // title
+				'Ok'                  // buttonName
+			);			
 			$scope.ultimaFoto.estado = 0;
 			databaseFactory.guardarFoto($scope.ultimaFoto);
 			$location.path("/");	
 		}
 		
 		function uploadFail(){
-			alert("false!");
+			//alert("false!");
 			//$scope.cerrarModal();
 			$scope.ultimaFoto.estado = 1;
 			databaseFactory.guardarFoto($scope.ultimaFoto);	
 			console.log("Fallo el upload de foto");	
-			toaster.pop({
+			/*toaster.pop({
 				type: 'error',
 				body: 'No pudo subirse la foto, la app intenará enviarla luego, para ver su estado ingresa a "Tus Fotos"',
 				showCloseButton: true
-			});		
+			});	*/
+			navigator.notification.alert(
+				'No pudo subirse la foto, la app intenará enviarla luego, para ver su estado ingresa a "Fotos sin Compartir"',  // message
+				alertDismissed,         // callback
+				'Error al subir la imagen',            // title
+				'Ok'                  // buttonName
+			);	
 			$location.path("/");				
-		}		
+		}	
+
+		function alertDismissed() {
+			// do something
+		}
+		
 		
 	}
 ]);

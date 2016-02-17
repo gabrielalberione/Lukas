@@ -27,11 +27,11 @@
 			</div>			
 		</div>	-->
 		<div class="col-xs-12" style="margin-top: 15px;padding: 0px; margin-bottom: 4px;">
-			<div class="col-xs-10">				
-				<input class="timeline_input_comentario ng-pristine ng-untouched ng-valid" type="text" ng-model="comentario_nuevo" placeholder="ingrese su comentario...">
+			<div class="col-xs-12">				
+				<input class="timeline_input_comentario ng-pristine ng-untouched ng-valid" type="text" ng-model="comentario_foto" placeholder="ingrese su comentario...">
 			</div>		
-			<div class="col-xs-2" style="margin-top: -3px; padding-right: 10px;">
-				<button ng-click="enviarComentario(comentario_nuevo)" class="btn btn-success btn-circle-xs" ng-disabled="comentario_nuevo == '' || comentario_nuevo == null || banCargando" style="height: 42px;" disabled="disabled"><i class="fa fa-comment"></i></button>
+			<div class="col-xs-12">
+				<button ng-disabled="banCargando"  ng-click="enviarMultimedia(comentario_foto)" class="btn btn-success btn-circle-xs" style="width: 100%; height: 42px; margin-top: 5px;"> Enviar Foto</button>
 			</div>			
 		</div>			
 	</div>

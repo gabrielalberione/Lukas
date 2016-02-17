@@ -36,17 +36,17 @@
 	}
 </style>
 
-<div class="row" style="background-color: #EAE9E9; border-bottom: 1px solid #B1ADAE; ">
+<div class="row" style="background-color: #500310; border-bottom: 4px solid #940F25;">
 	<div class="col-xs-12">
-		<div style="float: left; margin: 0px 15px;">
-			<div class="btn btn-info btn-circle-xs" style="cursor: default;">Fotos sacadas</div>		
-		</div>		
-		<div style="float: right; margin: 0px 15px;">
-			<a ng-href="#/" class="btn btn-danger btn-circle-xs"><i class="fa fa-arrow-left"></i> Volver</a>		
-		</div>		
+		<div style="float: left; margin: 0px 15px; padding-bottom: 5px;">
+			<a ng-href="#/" class="" href="#/" style="color: #FFF; font-size: 30px;float: left;padding-bottom: 0px;"><i class="fa fa-angle-left"></i></a>	
+			<div class="" style="cursor: default;color: #FFF; font-size: 17px;float: left;margin-left: 15px; margin-top: 4px;">Fotos sin Compartir</div>					
+		</div>			
+		<a href="javascript:window.open('http://www.lukas.alberione.com.ar/','_self');"><img src="./images/logo.png" alt="NO HAY IMAGEN" style="max-height: 35px; float:right;margin: 6px;margin-right: 20px;" class="img-responsive"></a>
 	</div>
 </div>
 <div class="col-xs-12" style="margin-top: 15px; margin-bottom: 40px;">
+	<div ng-if="banCargando" class="loading-spinner"></div>	
 	<div class="col-xs-6" ng-repeat="foto in misFotos" style="margin-top: 15px;">
 		<div class="divImgSacada" style="background-image: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url('{{ foto.ruta }}');">
 			<i ng-if="foto.estado == 0" class="fa fa-check-circle" style="color: #7cd448"></i>
@@ -55,5 +55,8 @@
 				<div class="divTextoError" style="cursor: default;">error al subir</div>
 			</div>
 		</div>
-	</div>		
+	</div>	
+	<div class="col-xs-12" ng-if="misFotos == null">
+		<p style="font-size: 13px;"> Usted no posee fotos sin compartir! </p>
+	</div>
 </div>

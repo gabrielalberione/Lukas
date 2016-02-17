@@ -39,6 +39,7 @@
 				</div>
 			</div>
 			<img ng-click="open(multimedia.Multimedia.id)" style="width: 100%; margin-bottom: 10px;" src="{{ urlFile }}/multimedias/eventos/{{ evento.id }}/md_{{ multimedia.Multimedia.codigo }}">
+			<p style="padding: 0px 15px; font-size: 13px;">{{ multimedia.Multimedia.comentario }}</p>
 			<div style="padding: 0px 15px;">
 				<span class="timeline_viral" style="margin-right: 10px;" ng-if="multimedia.Multimedia.c_likes > 0">{{multimedias[$index].Multimedia.c_likes}} Me gusta</span>
 				<span ng-click="open(multimedia.Multimedia.id)" class="timeline_viral" ng-if="multimedia.Multimedia.c_comentarios > 0">{{multimedia.Multimedia.c_comentarios}} Comentarios</span>
