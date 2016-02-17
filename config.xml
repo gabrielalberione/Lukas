@@ -38,9 +38,13 @@
 	<gap:config-file platform="ios" parent="UIViewControllerBasedStatusBarAppearance">
 		<false/>
 	</gap:config-file>	
+	
    <feature name="StatusBar">
 		<param name="ios-package" value="CDVStatusBar" onload="true" />
 	</feature>			
+	<feature name="NetworkStatus">
+		<param name="ios-package" value="CDVConnection" />
+	</feature>
 	
 	<gap:plugin name="cordova-plugin-camera" spec="1.2.0" source="pgb" />
 	<gap:plugin name="cordova-plugin-dialogs" spec="1.1.1" source="pgb" />
